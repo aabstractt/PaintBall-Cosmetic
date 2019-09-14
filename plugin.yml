@@ -1,0 +1,6 @@
+name: PaintBallGun
+description: PaintBallGun
+author: iTheTrollIdk
+main: paintball\Main
+version: 1.2.0
+api: [3.0.0]
