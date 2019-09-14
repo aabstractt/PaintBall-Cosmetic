@@ -34,6 +34,8 @@ class EventListener implements Listener {
         if($ev->getEntity() instanceof Snowball){
             $player = $ev->getEntity()->getOwningEntity();
             if($player instanceof Player){
+                if($player->hasPermission('snow.paintball')) return;
+                if($player->getLevel() !== Server::getInstance()->getDefaultLevel()) return;
                 if(Main::getInstance()->getBlockData()->get($player->getName()) == null) $storage = Main::getInstance()->getBlockData()->add($player->getName());
                 else $storage = Main::getInstance()->getBlockData()->get($player->getName());
                 foreach(Main::getInstance()->getBlockData()->getBlocksInRadius($ev->getBlockHit()->asPosition(), 2) as $block){
