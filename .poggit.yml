@@ -1,0 +1,7 @@
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/iTheTrollIdk/PaintBall-Cosmetic
+branches:
+- master
+projects:
+  PaintBall-Cosmetic:
+    path: ""
+...
