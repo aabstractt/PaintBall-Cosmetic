@@ -26,7 +26,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -54,7 +54,7 @@
       <workItem from="1568314596199" duration="2968000" />
       <workItem from="1568401826973" duration="6017000" />
       <workItem from="1568442725733" duration="8904000" />
-      <workItem from="1568488627802" duration="4550000" />
+      <workItem from="1568488627802" duration="5329000" />
     </task>
     <servers />
   </component>
