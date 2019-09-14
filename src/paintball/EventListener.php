@@ -46,9 +46,4 @@ class EventListener implements Listener {
             }
         }
     }
-
-    public function microtime(int $value): void {
-        $micro = (float) ($value * 1000) / 1;
-        echo 'seconds > ' . $value . ':' . $micro;
-    }
 }

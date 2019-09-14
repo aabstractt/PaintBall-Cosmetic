@@ -54,7 +54,7 @@
       <workItem from="1568314596199" duration="2968000" />
       <workItem from="1568401826973" duration="6017000" />
       <workItem from="1568442725733" duration="8904000" />
-      <workItem from="1568488627802" duration="5329000" />
+      <workItem from="1568488627802" duration="5557000" />
     </task>
     <servers />
   </component>
@@ -71,5 +71,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
   </component>
 </project>
