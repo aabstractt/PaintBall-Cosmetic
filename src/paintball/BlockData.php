@@ -49,7 +49,7 @@ class BlockData {
         if(!isset($this->storage[strtolower($name)]))  return;
         $storage = $this->get($name);
         $storage->restoreAll();
-        $storage->restore->getHandler()->cancel();
+        if($storage->restore !== null) $storage->restore->getHandler()->cancel();
         unset($this->storage[strtolower($name)]);
     }
 
