@@ -77,11 +77,12 @@ class BlockFactory {
 
         $bz = $pos->getZ();
 
-        for($x = ($bx - $radius); $x <= ($bx + $radius); $x++){
-            for($y = ($by - $radius); $y <= ($by + $radius); $y++){
-                for($z = ($bz - $radius); $z <= ($bz + $radius); $z++){
+        for ($x = ($bx - $radius); $x <= ($bx + $radius); $x++) {
+            for ($y = ($by - $radius); $y <= ($by + $radius); $y++) {
+                for ($z = ($bz - $radius); $z <= ($bz + $radius); $z++) {
                     $distance = (($bx - $x) * ($bx - $x) + ($by - $y) * ($by - $y) + ($bz - $z) * ($bz - $z));
-                    if($distance < $radius * $radius && !($hollow && $distance < (($radius - 1) * ($radius - 1)))) {
+
+                    if ($distance < $radius * $radius && !($hollow && $distance < (($radius - 1) * ($radius - 1)))) {
                         $block = $pos->getLevelNonNull()->getBlockAt((int)$x, (int)$y, (int)$z);
 
                         if ($block->getId() == Block::SIGN_POST) continue;

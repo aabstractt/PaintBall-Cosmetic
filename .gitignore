@@ -24,5 +24,3 @@ hs_err_pid*
 
 # PHPStorm idea folder
 .idea
-# gameapi folder
-src/gameapi/

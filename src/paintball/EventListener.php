@@ -31,7 +31,7 @@ class EventListener implements Listener {
      *
      * @priority NORMAL
      */
-    public function onProjectileHitBlockEvent(ProjectileHitBlockEvent $ev){
+    public function onProjectileHitBlockEvent(ProjectileHitBlockEvent $ev): void {
         $entity = $ev->getEntity();
 
         if (!$entity instanceof Snowball) return;
