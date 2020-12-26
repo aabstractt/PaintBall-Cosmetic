@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace paintball;
 
+use paintball\block\BlockFactory;
 use pocketmine\block\Block;
 use pocketmine\entity\projectile\Snowball;
 use pocketmine\event\entity\ProjectileHitBlockEvent;
@@ -13,37 +16,42 @@ use pocketmine\Server;
 class EventListener implements Listener {
 
     /**
-     * EventListener constructor.
-     */
-    public function __construct(){
-        Server::getInstance()->getPluginManager()->registerEvents($this, Main::getInstance());
-    }
-
-    /**
      * @param PlayerQuitEvent $ev
+     *
+     * @priority NORMAL
      */
-    public function onQuit(PlayerQuitEvent $ev): void {
+    public function onPlayerQuitEvent(PlayerQuitEvent $ev): void {
         $player = $ev->getPlayer();
-        if(Main::getInstance()->getBlockData()->get($player->getName()) instanceof BlockStorage) Main::getInstance()->getBlockData()->remove($player->getName());
+
+        BlockFactory::removeStorage($player->getName());
     }
 
     /**
      * @param ProjectileHitBlockEvent $ev
+     *
+     * @priority NORMAL
      */
-    public function onProjectileHit(ProjectileHitBlockEvent $ev){
-        if($ev->getEntity() instanceof Snowball){
-            $player = $ev->getEntity()->getOwningEntity();
-            if($player instanceof Player){
-                if(!$player->hasPermission('snow.paintball')) return;
-                if($player->getLevel() !== Server::getInstance()->getDefaultLevel()) return;
-                if(Main::getInstance()->getBlockData()->get($player->getName()) == null) $storage = Main::getInstance()->getBlockData()->add($player->getName());
-                else $storage = Main::getInstance()->getBlockData()->get($player->getName());
-                foreach(Main::getInstance()->getBlockData()->getBlocksInRadius($ev->getBlockHit()->asPosition(), 2) as $block){
-                    $storage->add($block);
-                    $ev->getEntity()->getLevel()->setBlock($block, Block::get(35, rand(0, 15)));
-                }
-                if($storage->restore == null) new Restore($storage);
-            }
+    public function onProjectileHitBlockEvent(ProjectileHitBlockEvent $ev){
+        $entity = $ev->getEntity();
+
+        if (!$entity instanceof Snowball) return;
+
+        $player = $entity->getOwningEntity();
+
+        if (!$player instanceof Player) return;
+
+        if (!$player->hasPermission('snow.paintball')) return;
+
+        if ($player->getLevelNonNull() !== Server::getInstance()->getDefaultLevel()) return;
+
+        $storage = BlockFactory::getStorage($player->getName());
+
+        if ($storage == null) $storage = BlockFactory::addStorage($player->getName());
+
+        foreach (BlockFactory::getBlocksInRadius($ev->getBlockHit(), 2) as $blocksInRadius) {
+            $storage->addBlock($blocksInRadius);
+
+            $player->getLevelNonNull()->setBlock($blocksInRadius, Block::get(35, rand(0, 15)));
         }
     }
 }

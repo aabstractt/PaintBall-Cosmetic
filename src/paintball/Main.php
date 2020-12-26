@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace paintball;
 
+use paintball\block\BlockFactory;
 use pocketmine\plugin\PluginBase;
 
 class Main extends PluginBase {
@@ -9,21 +12,24 @@ class Main extends PluginBase {
     /** @var Main */
     protected static $instance;
 
-    /** @var BlockData */
-    protected $blockdata;
-
-    public function onEnable(){
+    public function onEnable(): void {
         self::$instance = $this;
+
         $this->getLogger()->info('PaintBallGun has been enable, loading config...');
-        new EventListener();
-        $this->blockdata = new BlockData();
+
+        $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
     }
 
-    /**
-     * @return BlockData
-     */
-    public final function getBlockData(): BlockData {
-        return $this->blockdata;
+    public function onDisable(): void {
+        $sleepTime = max(3, (int) (count($this->getServer()->getOnlinePlayers()) / 10));
+
+        foreach (BlockFactory::getStorages() as $storage) {
+            $storage->updateRestoreBlocks(true);
+
+            BlockFactory::removeStorage($storage->getName());
+        }
+
+        sleep($sleepTime);
     }
 
     /**
